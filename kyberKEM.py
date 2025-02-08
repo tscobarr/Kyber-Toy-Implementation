@@ -1,5 +1,5 @@
 import os
-from kyberPKE import keygenPKE, encryptPKE, decryptPKE, encrypt, decrypt
+from kyberPKE import keygenPKE, encryptPKE, decryptPKE
 from utils import serialize_polynomial_vector, bytes_to_bit_list, bit_list_to_bytes
 from optimization import H, G, KDF
 

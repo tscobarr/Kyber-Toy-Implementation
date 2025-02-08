@@ -1,7 +1,5 @@
 import unittest
-from poly import Polynomial
-from vector import PolynomialVector
-from norms import infinity_norm_integer, infinity_norm_polynomial, infinity_norm_vector, round_q
+from poly import Polynomial, PolynomialVector
 
 class TestPolynomial(unittest.TestCase):
     def test_addition(self):
@@ -78,45 +76,6 @@ class TestPolynomialVector(unittest.TestCase):
         ])
         result = a.inner_product(b)
         expected = Polynomial([93, 59, 44, 132], q)
-        self.assertEqual(result.coefficients, expected.coefficients)
-
-class TestNorms(unittest.TestCase):
-    def test_infinity_norm_integer(self):
-        q = 41
-        value = 32
-        result = infinity_norm_integer(value, q)
-        expected = 9
-        self.assertEqual(result, expected)
-
-    def test_infinity_norm_polynomial(self):
-        q = 41
-        p = Polynomial([32, 0, 17, 22], q)
-        result = infinity_norm_polynomial(p)
-        expected = 19
-        self.assertEqual(result, expected)
-
-    def test_infinity_norm_vector(self):
-        q = 41
-        p1 = Polynomial([32, 0, 17, 22], q)
-        p2 = Polynomial([11, 7, 19, 1], q)
-        v = PolynomialVector([p1, p2])
-        result = infinity_norm_vector(v)
-        expected = 19
-        self.assertEqual(result, expected)
-
-    def test_round_q(self):
-        q = 41
-        value = 32
-        result = round_q(value, q)
-        expected = 0
-        self.assertEqual(result, expected)
-
-    def test_round_q_polynomial(self):
-        q = 3329
-        p = Polynomial([3000, 1500, 2010, 37], q)
-        rounded_coefficients = [round_q(c, q) for c in p.coefficients]
-        result = Polynomial(rounded_coefficients, q)
-        expected = Polynomial([0, 1, 1, 0], q)
         self.assertEqual(result.coefficients, expected.coefficients)
 
 if __name__ == '__main__':
