@@ -1,23 +1,44 @@
-from kyberPKE import generate_keypair, encrypt, decrypt, string_to_bitstring, bitstring_to_string
 from kyber_params import KYBER_PARAMS
+from kyberPKE import keygenPKE, encrypt, decrypt, encryptPKE, decryptPKE
+from kyberKEM import keygenKEM, encapsulate, decapsulate
+from utils import bitstring_to_string, string_to_bitstring, preprocess_message, postprocess_message
 
-# Example usage:
-params = KYBER_PARAMS["kyber512"]
+def main():
+    # Example usage for Kyber-PKE
+    params = KYBER_PARAMS["kyber512"]
 
-public_key, private_key, t = generate_keypair(params)
+    print("Testing Kyber-PKE:")
 
-# Convert the message to a bit string and pad it to the required length
-message_str = "This is an encrypted message"
-message_bits = string_to_bitstring(message_str)
-message_bits_padded = message_bits.ljust(params["n"], '0')
-message = [int(bit) for bit in message_bits_padded]
+    # Generate PKE keypair
+    public_key, private_key = keygenPKE(params)
 
-ciphertext, u, v = encrypt(params, public_key, message)
+    # Encrypt the message
+    message_str = "This is an encrypted message"
+    ciphertext = encrypt(params, public_key, message_str)
 
-# Decrypt the message
-decrypted_message_bits = decrypt(params, private_key, ciphertext)
-decrypted_message_bits_str = ''.join(str(bit) for bit in decrypted_message_bits[:len(message_bits)])
-decrypted_message = bitstring_to_string(decrypted_message_bits_str)
+    # Decrypt the message
+    decrypted_message = decrypt(params, private_key, ciphertext)
 
-print("Original message:", message_str)
-print("Decrypted message:", decrypted_message)
+    print("Original message:", message_str)
+    print("Decrypted message:", decrypted_message)
+
+    # Example usage for Kyber-KEM
+    print("\nTesting Kyber-KEM:")
+    
+    # Generate KEM keypair
+    ek, dk = keygenKEM(params)
+
+    # Encapsulate|
+    ciphertext_kem, shared_secret_enc = encapsulate(ek, params, dk)
+
+    # Decapsulate
+    shared_secret_dec = decapsulate(dk, ciphertext_kem, params)
+
+    # Verify if the shared secrets match
+    if shared_secret_enc == shared_secret_dec:
+        print("KEM test passed: Shared secrets match.")
+    else:
+        print("KEM test failed: Shared secrets do not match.")
+
+if __name__ == "__main__":
+    main()
