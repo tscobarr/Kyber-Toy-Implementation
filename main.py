@@ -28,7 +28,7 @@ def main():
     ek, dk = keygenKEM(params)
 
     # Encapsulate|
-    ciphertext_kem, shared_secret_enc = encapsulate(ek, params, dk)
+    ciphertext_kem, shared_secret_enc = encapsulate(ek, params)
 
     # Decapsulate
     shared_secret_dec = decapsulate(dk, ciphertext_kem, params)

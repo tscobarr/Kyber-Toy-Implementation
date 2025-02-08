@@ -29,7 +29,7 @@ def keygenKEM(params):
 
     return ek, dk
 
-def encapsulate(ek, params, dk):
+def encapsulate(ek, params):
     """Encapsulates a shared secret using the encapsulation key.
 
     Args:
