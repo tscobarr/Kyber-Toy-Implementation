@@ -1,4 +1,4 @@
-# Kyber PKE Toy Implementation
+# Kyber Toy Implementation
 
 This repository contains a toy implementation of the Kyber Public Key Encryption (PKE) scheme and Key Encapsulation Mechanism (KEM) . This implementation is intended for educational purposes only.
 
