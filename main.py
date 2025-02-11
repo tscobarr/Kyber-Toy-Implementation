@@ -1,40 +1,40 @@
-from kyber_params import KYBER_PARAMS
+from kyberParams import KYBER_PARAMS
 from kyberPKE import keygenPKE, encrypt, decrypt
 from kyberKEM import keygenKEM, encapsulate, decapsulate
 
 def main():
     # Example usage for Kyber-PKE
-    params = KYBER_PARAMS["kyber512"]
+    params = KYBER_PARAMS["kyber1024"]
 
     print("Testing Kyber-PKE:")
 
     # Generate PKE keypair
-    public_key, private_key = keygenPKE(params)
+    publicKey, privateKey = keygenPKE(params)
 
     # Encrypt the message
-    message_str = "This is an encrypted message"
-    ciphertext = encrypt(params, public_key, message_str)
+    messageStr = "This is an encrypted message"
+    cipherText = encrypt(params, publicKey, messageStr)
 
     # Decrypt the message
-    decrypted_message = decrypt(params, private_key, ciphertext)
+    decryptedMessage = decrypt(params, privateKey, cipherText)
 
-    print("Original message:", message_str)
-    print("Decrypted message:", decrypted_message)
+    print("Original message:", messageStr)
+    print("Decrypted message:", decryptedMessage)
 
     # Example usage for Kyber-KEM
     print("\nTesting Kyber-KEM:")
     
     # Generate KEM keypair
-    ek, dk = keygenKEM(params)
+    pk, sk = keygenKEM(params)
 
-    # Encapsulate|
-    ciphertext_kem, shared_secret_enc = encapsulate(ek, params)
+    # Encapsulate
+    cipherTextKem, sharedSecretEnc = encapsulate(pk, params)
 
     # Decapsulate
-    shared_secret_dec = decapsulate(dk, ciphertext_kem, params)
+    sharedSecretDec = decapsulate(cipherTextKem, sk, params)
 
     # Verify if the shared secrets match
-    if shared_secret_enc == shared_secret_dec:
+    if sharedSecretEnc == sharedSecretDec:
         print("KEM test passed: Shared secrets match.")
     else:
         print("KEM test failed: Shared secrets do not match.")
