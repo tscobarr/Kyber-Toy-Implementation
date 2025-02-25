@@ -177,3 +177,39 @@ def encode(poly, n, l):
                     byte |= bitArray[i + j] << (7 - j)
             byteArray.append(byte)
     return bytes(byteArray)
+
+def compare_polynomials(p1, p2):
+    """Compares two polynomials for equality.
+
+    Args:
+        p1 (Polynomial): The first polynomial.
+        p2 (Polynomial): The second polynomial.
+
+    Returns:
+        bool: True if the polynomials are equal, False otherwise.
+    """
+    if p1.q != p2.q:
+        return False
+    if len(p1.coefficients) != len(p2.coefficients):
+        return False
+    for c1, c2 in zip(p1.coefficients, p2.coefficients):
+        if c1 != c2:
+            return False
+    return True
+
+def compare_polynomial_vectors(v1, v2):
+    """Compares two polynomial vectors for equality.
+
+    Args:
+        v1 (PolynomialVector): The first polynomial vector.
+        v2 (PolynomialVector): The second polynomial vector.
+
+    Returns:
+        bool: True if the polynomial vectors are equal, False otherwise.
+    """
+    if len(v1.polynomials) != len(v2.polynomials):
+        return False
+    for p1, p2 in zip(v1.polynomials, v2.polynomials):
+        if not compare_polynomials(p1, p2):
+            return False
+    return True

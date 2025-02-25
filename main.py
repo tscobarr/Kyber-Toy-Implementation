@@ -1,4 +1,4 @@
-from kyberParams import KYBER_PARAMS
+from params import KYBER_PARAMS
 from kyberPKE import keygenPKE, encrypt, decrypt
 from kyberKEM import keygenKEM, encapsulate, decapsulate
 

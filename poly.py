@@ -1,3 +1,5 @@
+import random
+
 class Polynomial:
     def __init__(self, coefficients, q):
         self.coefficients = [c % q for c in coefficients]
@@ -49,6 +51,11 @@ class Polynomial:
     def __repr__(self):
         return "Polynomial({}, q={})".format(self.coefficients, self.q)
     
+    @staticmethod
+    def random_polynomial(degree, q):
+        coefficients = [random.randint(0, q-1) for _ in range(degree + 1)]
+        return Polynomial(coefficients, q)
+    
 class PolynomialVector:
     def __init__(self, polynomials):
         self.polynomials = polynomials
@@ -67,13 +74,10 @@ class PolynomialVector:
         result = [self.polynomials[i] - other.polynomials[i] for i in range(len(self.polynomials))]
         return PolynomialVector(result)
 
-    def inner_product(self, other):
-        if len(self.polynomials) != len(other.polynomials):
-            raise ValueError("Vectors must have the same length")
-        result = Polynomial([0] * self.n, self.q)
-        for i in range(len(self.polynomials)):
-            result = result + self.polynomials[i].mulRq(other.polynomials[i], self.n)
-        return result
-
     def __repr__(self):
         return "PolynomialVector({})".format(self.polynomials)
+    
+    @staticmethod
+    def random_polynomial_vector(size, degree, q):
+        polynomials = [Polynomial.random_polynomial(degree, q) for _ in range(size)]
+        return PolynomialVector(polynomials)

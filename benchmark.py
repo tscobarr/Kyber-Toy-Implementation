@@ -1,6 +1,6 @@
 import cProfile
 from time import time
-from kyberParams import KYBER_PARAMS
+from params import KYBER_PARAMS
 from kyberPKE import keygenPKE, encryptPKE, decryptPKE
 from kyberKEM import keygenKEM, encapsulate, decapsulate
 
